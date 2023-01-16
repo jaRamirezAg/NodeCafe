@@ -13,6 +13,8 @@ import {
   existeUsuarioPorId,
 } from "../helpers/dbValidators.js";
 import validarCampos from "../middlewares/validarCampos.js";
+import validarJWT from "../middlewares/validarJWT.js";
+import { esAdminRole, tieneRole } from "../middlewares/validarRoles.js";
 
 const router = Router();
 
@@ -48,6 +50,9 @@ router.post(
 router.delete(
   "/:id",
   [
+    validarJWT,
+    // esAdminRole,
+    tieneRole("ADMIN_ROLE", "VENTAS_ROLE"),
     check("id", "No es un ID válido").isMongoId(),
     check("id").custom(existeUsuarioPorId),
     validarCampos,
@@ -57,4 +62,4 @@ router.delete(
 
 router.patch("/", usuariosPatch);
 
-export default router;
+export { router as routerUsuarios };

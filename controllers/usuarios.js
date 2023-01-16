@@ -50,6 +50,8 @@ const usuariosPut = async (req, res = response) => {
   try {
     const usuario = await Usuario.findByIdAndUpdate(id, resto);
 
+    // const usuarioActualizado = await Usuario.findById(id);
+
     res.json(usuario);
   } catch (error) {
     res.status(400).json({ msg: "Error al actualizar usuario" });
@@ -69,6 +71,8 @@ const usuariosDelete = async (req, res = response) => {
   // const usuario = await Usuario.findByIdAndDelete(id);
 
   const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
+
+  const usuarioAutenticado = req.usuario;
   res.json(usuario);
 };
 

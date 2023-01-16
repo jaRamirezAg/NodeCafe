@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const dbConnection = async () => {
   try {
-    await mongoose.connect(process.env.MONGOBD_CNN, {
+    mongoose.set("strictQuery", false);
+    const db = await mongoose.connect(process.env.MONGOBD_CNN, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
